@@ -2,6 +2,7 @@ import { PropsWithChildren, useEffect, useReducer } from 'react';
 import { AuthContext } from './AuthContext';
 import { authReducer } from './authReducer';
 import { IAuthState } from './types';
+import { LoadingScreen } from '@/components/loading';
 import axios from '@/utils/axios';
 
 const initialState: IAuthState = {
@@ -71,6 +72,10 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
   useEffect(() => {
     console.log(state);
   }, [state]);
+
+  if (!state.isInitialized) {
+    return <LoadingScreen />;
+  }
 
   return (
     <AuthContext.Provider value={{ ...state, signin }}>
