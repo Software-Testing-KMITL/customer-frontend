@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const ProductQualtity = () => {
-    const [amount, setAmount] = useState(1);
+  const [amount, setAmount] = useState(1);
 
   return (
     <div className="flex gap-[15px] my-[30px]">
@@ -17,7 +17,7 @@ const ProductQualtity = () => {
       >
         -
       </button>
-      <p className="text-[20px]">{amount}</p>
+      <span className="text-[20px]">{amount}</span>
       <button
         className="bg-gray-300 w-[30px] h-[30px] rounded-full"
         onClick={() => setAmount(amount + 1)}

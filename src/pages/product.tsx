@@ -10,15 +10,15 @@ const Product = () => {
         </section>
         <section>
           <h2 className="text-5xl font-bold mb-[30px]">Product Name</h2>
-          <p>
+          <p className="pr-[25%]">
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque
             omnis consequuntur vitae, qui voluptas quas excepturi officiis
             dignissimos praesentium? Perferendis consequatur dolorum facilis
             delectus reprehenderit! Facere dicta ea pariatur nemo.
           </p>
-          <p className="text-2xl text-orange-400 font-semibold my-[20px]">
+          <h3 className="text-2xl text-orange-400 font-semibold my-[20px]">
             $ 44.00
-          </p>
+          </h3>
           <ProductQualtity />
           <div className="flex gap-[30px]">
             <button className="bg-orange-100 rounded-[7px] text-xl p-[12px] border-[2px] border-orange-400 text-orange-400">
