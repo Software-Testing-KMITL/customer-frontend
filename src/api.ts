@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Dispatch, SetStateAction } from "react";
-const baseURL = "";
+const baseURL = "https://api-customer.witchayut.com";
 
 type SignInResquestType = {
   username: string;
@@ -95,28 +95,34 @@ function getProductById(
   productId: string,
   callBack: (code: string, response: ProductDetailResponseType | null) => void
 ) {
-  axios.get(baseURL + "/product" + productId).then((response) => {
-    const { status, data } = response.data;
+  axios
+    .get(baseURL + "/product" + productId, {
+      headers: {
+        token,
+      },
+    })
+    .then((response) => {
+      const { status, data } = response.data;
 
-    const {
-      productId,
-      productName,
-      category,
-      price,
-      productDetail,
-      productAmount,
-    } = data.product;
+      const {
+        productId,
+        productName,
+        category,
+        price,
+        productDetail,
+        productAmount,
+      } = data.product;
 
-    const extractedResponse: ProductDetailResponseType = {
-      productId,
-      productName,
-      category,
-      price,
-      productDetail,
-      productAmount,
-    };
-    callBack(status.code, extractedResponse);
-  });
+      const extractedResponse: ProductDetailResponseType = {
+        productId,
+        productName,
+        category,
+        price,
+        productDetail,
+        productAmount,
+      };
+      callBack(status.code, extractedResponse);
+    });
 }
 
 // * Cart
@@ -134,11 +140,11 @@ export {
   signin,
   getProductList,
   getProductById,
-  checkoutCart,
-  getCartItems,
-  addCartItem,
-  updateCartItem,
-  deleteCartItem,
-  getUserProfile,
-  editUserProfile,
+  // checkoutCart,
+  // getCartItems,
+  // addCartItem,
+  // updateCartItem,
+  // deleteCartItem,
+  // getUserProfile,
+  // editUserProfile,
 };
