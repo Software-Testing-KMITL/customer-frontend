@@ -1,7 +1,7 @@
 import { default as axiosIntance } from 'axios';
 
 const axios = axiosIntance.create({
-  baseURL: 'https://api.example.com',
+  baseURL: 'https://api-customer.witchayut.com',
 });
 
 export default axios;
