@@ -2,10 +2,22 @@ import axios from "axios";
 import { Dispatch, SetStateAction } from "react";
 const baseURL = "";
 
-type SignResponseType = {
+type SignInResquestType = {
+  username: string;
+  password: string;
+};
+type SignInResponseType = {
   accessToken: string;
+  username: string;
+  phoneNumber: string;
 };
 
+type ProductListRequestType = {
+  page: number;
+  perPage: number;
+  search: string;
+  category: string;
+};
 type ProductListResponseType = {
   hasNext: boolean;
   page: number;
@@ -13,20 +25,36 @@ type ProductListResponseType = {
   products: Array<object>;
 };
 
+type ProductDetailResponseType = {
+  productId: string;
+  productName: string;
+  category: string;
+  price: number;
+  productDetail: string;
+  productAmount: number;
+};
+
+// * Authentication
+// Sign in.
 function signin(
-  username: string,
-  password: string,
+  body: SignInResquestType,
   // callBack: Dispatch<SetStateAction<string>>
-  callBack: (code: string, response: SignResponseType | null) => void
+  callBack: (code: string, response: SignInResponseType | null) => void
 ) {
   axios
     .post(baseURL + "/auth/login", {
-      username,
-      password,
+      username: body.username,
+      password: body.password,
     })
     .then((response) => {
-      console.log(response.data.status.code);
-      callBack(response.data.status.code, response.data.accessToken);
+      const { status, profile, accessToken } = response.data;
+      const extractedResponse: SignInResponseType = {
+        accessToken,
+        username: profile.username,
+        phoneNumber: profile.phoneNumber,
+      };
+      console.log(status.code);
+      callBack(status.code, extractedResponse);
     })
     .catch((e) => {
       console.log(e);
@@ -34,29 +62,16 @@ function signin(
     });
 }
 
-// function findNews(q, callBack) {
-//   axios.get(baseURL + `&q=${q}`).then((response) => {
-//     console.log(response.data.results);
-//     callBack(response.data.results);
-//   }).catch;
-// }
+// TODO: Refresh token
 
+// * Products
+// Get product list.
 function getProductList(
-  page: number,
-  perPage: number,
-  search: string,
-  category: string,
+  params: ProductListRequestType,
   callBack: (code: string, response: ProductListResponseType | null) => void
 ) {
-  let params = {
-    page,
-    perPage,
-    search,
-    category,
-  };
-
   axios
-    .get(baseURL + "/products", { params })
+    .get(baseURL + "/products", { params: JSON.stringify(params) })
     .then((response) => {
       const { hasNext, page, totalProducts, products, status } = response.data;
 
@@ -74,6 +89,56 @@ function getProductList(
     });
 }
 
-function getProductById() {}
+// Get Product detail.
+function getProductById(
+  token: string,
+  productId: string,
+  callBack: (code: string, response: ProductDetailResponseType | null) => void
+) {
+  axios.get(baseURL + "/product" + productId).then((response) => {
+    const { status, data } = response.data;
 
-export { signin, getProductList, getProductById };
+    const {
+      productId,
+      productName,
+      category,
+      price,
+      productDetail,
+      productAmount,
+    } = data.product;
+
+    const extractedResponse: ProductDetailResponseType = {
+      productId,
+      productName,
+      category,
+      price,
+      productDetail,
+      productAmount,
+    };
+    callBack(status.code, extractedResponse);
+  });
+}
+
+// * Cart
+function checkoutCart() {}
+function getCartItems() {}
+function addCartItem() {}
+function updateCartItem() {}
+function deleteCartItem() {}
+
+// * Profile
+function getUserProfile() {}
+function editUserProfile() {}
+
+export {
+  signin,
+  getProductList,
+  getProductById,
+  checkoutCart,
+  getCartItems,
+  addCartItem,
+  updateCartItem,
+  deleteCartItem,
+  getUserProfile,
+  editUserProfile,
+};
