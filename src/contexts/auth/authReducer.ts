@@ -11,7 +11,7 @@ type ActionType =
       };
     }
   | {
-      type: 'LOGIN';
+      type: 'SIGNIN';
       payload: { accessToken: string; user: UserType | null };
     };
 
@@ -25,7 +25,7 @@ export const authReducer = (state: IAuthState, action: ActionType) => {
         user: action.payload.user,
         accessToken: action.payload.accessToken,
       };
-    case 'LOGIN':
+    case 'SIGNIN':
       return {
         ...state,
         isInitialized: true,
