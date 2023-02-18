@@ -1,7 +1,19 @@
 import React, { useState } from "react";
 import { ProductQualtity } from "@/sections/product";
+import { ProductType } from "@/types";
 
 const Product = () => {
+  const data: ProductType = {
+    id: "",
+    name: "Product Name",
+    price: 44.99,
+    amount: 0,
+    description:
+      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque omnis consequuntur vitae, qui voluptas quas excepturi officiis dignissimos praesentium? Perferendis consequatur dolorum facilis delectus reprehenderit! Facere dicta ea pariatur nemo.",
+    category: "tops",
+    picture: "",
+  };
+
   return (
     <div className="h-[100vh] grid place-items-center">
       <div className="container grid grid-cols-2 gap-[20px]">
@@ -9,15 +21,10 @@ const Product = () => {
           <div className="bg-black rounded-[20px] w-[500px] h-[500px]"></div>
         </section>
         <section>
-          <h2 className="text-5xl font-bold mb-[30px]">Product Name</h2>
-          <p className="pr-[25%]">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque
-            omnis consequuntur vitae, qui voluptas quas excepturi officiis
-            dignissimos praesentium? Perferendis consequatur dolorum facilis
-            delectus reprehenderit! Facere dicta ea pariatur nemo.
-          </p>
+          <h2 className="text-5xl font-bold mb-[30px]">{data.name}</h2>
+          <p className="pr-[25%]">{data.description}</p>
           <h3 className="text-2xl text-orange-400 font-semibold my-[20px]">
-            $ 44.00
+            $ {data.price}
           </h3>
           <ProductQualtity />
           <div className="flex gap-[30px]">
