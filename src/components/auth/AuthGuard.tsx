@@ -1,11 +1,11 @@
-import { useAuth } from '@/hooks/useAuth';
 import { PropsWithChildren } from 'react';
-import { LoadingScreen } from '../loading';
+import { Navigate } from 'react-router-dom';
+import { useAuth } from '@/hooks/useAuth';
 
 const AuthGuard = ({ children }: PropsWithChildren) => {
   const { isAuthenticated } = useAuth();
 
-  if (!isAuthenticated) return <LoadingScreen />;
+  if (!isAuthenticated) return <Navigate to="/signin" replace={true} />;
 
   return <>{children}</>;
 };
