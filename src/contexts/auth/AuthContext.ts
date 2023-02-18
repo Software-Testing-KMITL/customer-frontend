@@ -2,7 +2,7 @@ import { createContext } from 'react';
 import { IAuthState } from './types';
 
 export interface IAuthContext extends IAuthState {
-  signin: () => void;
+  signin: (_data: { username: string; password: string }) => void;
 }
 
 export const AuthContext = createContext<IAuthContext>({} as IAuthContext);
