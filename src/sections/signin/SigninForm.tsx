@@ -1,13 +1,15 @@
+import { useAuth } from '@/hooks/useAuth';
 import { HookTextField, useHookForm } from 'mui-react-hook-form-plus';
-const defaultValues = { person: { username: '', password: '' } };
+const defaultValues = { username: '', password: '' };
 
 const SigninForm = () => {
+  const { signin } = useAuth();
   const { registerState, handleSubmit } = useHookForm({
     defaultValues,
   });
 
   const onSubmit = (_data: typeof defaultValues) => {
-    console.log(_data);
+    signin(_data);
   };
 
   return (
@@ -16,7 +18,7 @@ const SigninForm = () => {
       onSubmit={handleSubmit(onSubmit)}
     >
       <HookTextField
-        {...registerState('person.username')}
+        {...registerState('username')}
         textFieldProps={{
           label: 'Username',
           fullWidth: true,
@@ -30,7 +32,7 @@ const SigninForm = () => {
       />
 
       <HookTextField
-        {...registerState('person.password')}
+        {...registerState('password')}
         textFieldProps={{
           label: 'Password',
           type: 'password',
