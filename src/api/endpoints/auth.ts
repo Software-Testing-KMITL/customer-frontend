@@ -1,14 +1,6 @@
+import { SignInResponseType, SignInResquestType } from "@/types";
 import axios from "@/utils/axios";
 import { AxiosError } from "axios";
-
-type SignInResquestType = {
-  username: string;
-  password: string;
-};
-type SignInResponseType = {
-  username: string;
-  phoneNumber: string;
-};
 
 const signin = async (
   body: SignInResquestType,

@@ -1,30 +1,11 @@
+import {
+  ProductDetailRequestType,
+  ProductDetailResponseType,
+  ProductListRequestType,
+  ProductListResponseType,
+} from "@/types";
 import axios from "@/utils/axios";
 import { AxiosError } from "axios";
-
-type ProductListRequestType = {
-  page?: number;
-  perPage?: number;
-  search?: string;
-  category?: Array<string>;
-};
-type ProductListResponseType = {
-  hasNext: boolean;
-  page: number;
-  totalProducts: number;
-  products: Array<object>;
-};
-
-type ProductDetailRequestType = {
-  productId: string;
-};
-type ProductDetailResponseType = {
-  productId: string;
-  productName: string;
-  category: string;
-  price: number;
-  productDetail: string;
-  productAmount: number;
-};
 
 const getProductList = async (
   body: ProductListRequestType | null,
@@ -57,24 +38,19 @@ const getProductById = async (
   callBack: (response: ProductDetailResponseType) => void
 ): Promise<void> => {
   try {
-    const response = await axios.get("/product" + body.productId);
-    const { status, data } = response.data;
-    const {
-      productId,
-      productName,
-      category,
-      price,
-      productDetail,
-      productAmount,
-    } = data.product;
+    const response = await axios.get("/product/" + body.productId);
+    const { data } = response.data;
+    const { _id, name, category, price, amount, description, picture } =
+      data.product;
 
     const extractedResponse: ProductDetailResponseType = {
-      productId,
-      productName,
+      productId: _id,
+      name,
       category,
       price,
-      productDetail,
-      productAmount,
+      amount,
+      description,
+      picture,
     };
     callBack(extractedResponse);
   } catch (e) {
