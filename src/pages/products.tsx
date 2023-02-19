@@ -18,17 +18,16 @@ const Products = () => {
 
   useEffect(() => {
     const handleResponse = (response: any) => {
-      console.log({ response });
-      setProducts(response.products);
+      setProducts(response.products[0]);
+      console.log(response.products[0]);
     };
 
-    console.log('hello');
     getProductList(null, handleResponse);
   }, []);
 
   useEffect(() => {
-    console.log({ products });
-  }, [products]);
+    console.log(products);
+  }, []);
 
   return (
     <div className="pt-16 pb-32">
