@@ -45,7 +45,7 @@ const getProductList = async (
     callBack(extractedResponse);
   } catch (e) {
     if (e instanceof AxiosError) {
-      const error = e.response?.data;
+      const error = e.response?.data.message;
       throw Error(error);
     }
   }
@@ -79,7 +79,7 @@ const getProductById = async (
     callBack(extractedResponse);
   } catch (e) {
     if (e instanceof AxiosError) {
-      const error = e.response?.data;
+      const error = e.response?.data.message;
       throw Error(error);
     }
   }
