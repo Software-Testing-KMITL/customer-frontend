@@ -4,7 +4,11 @@ const defaultValues = { username: '', password: '' };
 
 const SigninForm = () => {
   const { signin } = useAuth();
-  const { registerState, handleSubmit, formState: { errors } } = useHookForm({
+  const {
+    registerState,
+    handleSubmit,
+    formState: { errors },
+  } = useHookForm({
     defaultValues,
   });
 
@@ -22,6 +26,7 @@ const SigninForm = () => {
         textFieldProps={{
           label: 'Username',
           fullWidth: true,
+          helperText: '',
         }}
         rules={{
           required: {
@@ -30,7 +35,11 @@ const SigninForm = () => {
           },
         }}
       />
-      {errors.username && <span role="alert">{errors.username.message}</span>}
+      {errors.username && (
+        <span role="alert" className="text-red-500">
+          {errors.username.message}
+        </span>
+      )}
 
       <HookTextField
         {...registerState('password')}
@@ -38,6 +47,7 @@ const SigninForm = () => {
           label: 'Password',
           type: 'password',
           fullWidth: true,
+          helperText: '',
         }}
         rules={{
           required: {
@@ -46,11 +56,15 @@ const SigninForm = () => {
           },
         }}
       />
-      {errors.password && <span role="alert">{errors.password.message}</span>}
+      {errors.password && (
+        <span role="alert" className="text-red-500">
+          {errors.password.message}
+        </span>
+      )}
 
       <button
         type="submit"
-        className="bg-black py-2.5 font-semibold text-white mt-4 rounded-full"
+        className="bg-black py-2.5 font-semibold text-white mt-4 rounded-full active:bg-black/80"
       >
         Sign in
       </button>
