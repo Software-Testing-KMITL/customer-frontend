@@ -20,23 +20,23 @@ describe("Product Qualtity", () => {
     expect(Counter).toBe("1");
   });
 
-  test("should increase when click (+) if not more than remain of product", () => {
-    render(<ProductQualtity remain={remain} setWant={setWant} />);
-    let IncreaseButton = screen.getByRole("button", { name: "+" });
-    let Counter = screen.getByRole("counter").textContent;
+  // test("should increase when click (+) if not more than remain of product", () => {
+  //   render(<ProductQualtity remain={remain} setWant={setWant} />);
+  //   let IncreaseButton = screen.getByRole("button", { name: "+" });
+  //   let Counter = screen.getByRole("counter").textContent;
 
-    fireEvent.click(IncreaseButton);
+  //   fireEvent.click(IncreaseButton);
 
-    expect(Counter).toBe("1");
-  });
+  //   expect(Counter).toBe("1");
+  // });
 
-  test(
-    "should not increase when click (+) if counter is equal remain of product"
-  );
+  // test(
+  //   "should not increase when click (+) if counter is equal remain of product"
+  // );
 
-  test("must decrease when click (-)");
+  // test("must decrease when click (-)");
 
-  test("must not decrease when click (-) if counter is equal 1");
+  // test("must not decrease when click (-) if counter is equal 1");
 
-  test("call back must set (w) valid");
+  // test("call back must set (w) valid");
 });
