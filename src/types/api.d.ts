@@ -35,3 +35,26 @@ export type ProductDetailResponseType = {
   description: string;
   picture: string;
 };
+
+// Cart
+// export type GetCartItemsRequestType = {};
+export type GetCartItemsResponseType = {
+  cart: Array<ProductDetailResponseType>;
+};
+
+export type AddCartItemRequestType = {
+  productId: string;
+  amount: number;
+};
+export type AddCartItemResponseType = {
+  cart: Array<ProductDetailResponseType>;
+};
+
+export type updateCartItemResponseType = {};
+export type updateCartItemRequestType = {};
+
+export type deleteCartItemResponseType = {};
+export type deleteCartItemRequestType = {};
+
+export type checkoutCartItemResponseType = {};
+export type checkoutCartItemRequestType = {};

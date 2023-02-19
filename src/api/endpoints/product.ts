@@ -3,16 +3,16 @@ import {
   ProductDetailResponseType,
   ProductListRequestType,
   ProductListResponseType,
-} from '@/types';
-import axios from '@/utils/axios';
-import { AxiosError } from 'axios';
+} from "@/types";
+import axios from "@/utils/axios";
+import { AxiosError } from "axios";
 
 const getProductList = async (
   body: ProductListRequestType | null,
   callBack: (response: ProductListResponseType) => void
 ): Promise<void> => {
   try {
-    const response = await axios.get('/products', {
+    const response = await axios.get("/products", {
       params: body ? JSON.stringify(body) : {},
     });
 
@@ -38,7 +38,7 @@ const getProductById = async (
   callBack: (response: ProductDetailResponseType) => void
 ): Promise<void> => {
   try {
-    const response = await axios.get('/product/' + body.productId);
+    const response = await axios.get("/products/" + body.productId);
     const { data } = response.data;
     const { _id, name, category, price, amount, description, picture } =
       data.product;
