@@ -1,14 +1,5 @@
-import axios from "./utils/axios";
-import { Dispatch, SetStateAction } from "react";
-
-type SignInResquestType = {
-  username: string;
-  password: string;
-};
-type SignInResponseType = {
-  username: string;
-  phoneNumber: string;
-};
+import axios from "@/utils/axios";
+import { AxiosError } from "axios";
 
 type ProductListRequestType = {
   page: number;
@@ -35,36 +26,6 @@ type ProductDetailResponseType = {
   productAmount: number;
 };
 
-type GetCartItemsRequestType = {};
-type GetCartItemsResponseType = {};
-
-// * Authentication
-// Sign in.
-const signin = async (
-  body: SignInResquestType,
-  callBack: (response: SignInResponseType) => void
-): Promise<void> => {
-  try {
-    const response = await axios.post("/auth/login", body);
-    const { status, profile, accessToken } = response.data;
-    // Set auth access token.
-    localStorage.setItem("accessToken", accessToken);
-    axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
-
-    const extractedResponse: SignInResponseType = {
-      username: profile.username,
-      phoneNumber: profile.phoneNumber,
-    };
-    callBack(extractedResponse);
-  } catch (e) {
-    console.log("api signin error : " + e);
-    throw "api signin error : " + e;
-  }
-};
-// TODO: Refresh token
-
-// * Products
-// Get product list.
 const getProductList = async (
   body: ProductListRequestType
   // callBack: (code: string, response: ProductListResponseType | null) => void
@@ -120,29 +81,4 @@ const getProductById = async (
   }
 };
 
-// * Cart
-// const getCartItems = async (): Promise<GetCartItemsResponseType | null> => {
-//   try {
-//   } catch (e) {}
-// };
-const addCartItem = async () => {};
-const updateCartItem = async () => {};
-const checkoutCart = async () => {};
-const deleteCartItem = async () => {};
-
-// * Profile
-const getUserProfile = async () => {};
-const editUserProfile = async () => {};
-
-export {
-  signin,
-  getProductList,
-  getProductById,
-  // checkoutCart,
-  // getCartItems,
-  // addCartItem,
-  // updateCartItem,
-  // deleteCartItem,
-  // getUserProfile,
-  // editUserProfile,
-};
+export { getProductList, getProductById };
