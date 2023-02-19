@@ -46,6 +46,7 @@ const SigninForm = () => {
           },
         }}
       />
+      {errors.password && <span role="alert">{errors.password.message}</span>}
 
       <button
         type="submit"
