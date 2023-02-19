@@ -66,7 +66,7 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
       enqueueSnackbar('Login Success', { variant: 'success' });
     } catch (error) {
       if (error instanceof Error) {
-        const message = error.message || 'Invalid username or password';
+        const message = 'Invalid username or password';
 
         enqueueSnackbar(message, { variant: 'error' });
       }
