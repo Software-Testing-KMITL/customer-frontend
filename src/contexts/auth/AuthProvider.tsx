@@ -65,10 +65,11 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
       await APISignin(_data, signinDispatch);
       enqueueSnackbar('Login Success', { variant: 'success' });
     } catch (error) {
-      const message =
-        typeof error === 'string' ? error : 'Invalid username or password';
+      if (error instanceof Error) {
+        const message = error.message || 'Invalid username or password';
 
-      enqueueSnackbar(message, { variant: 'error' });
+        enqueueSnackbar(message, { variant: 'error' });
+      }
     }
   };
 
