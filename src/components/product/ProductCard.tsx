@@ -27,7 +27,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
           <div className="flex gap-2">
             {product.category.map((category) => (
-              <ProductBadge category={category} />
+              <ProductBadge key={category} category={category} />
             ))}
           </div>
         </div>
