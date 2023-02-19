@@ -1,7 +1,9 @@
+import { useAuth } from '@/hooks/useAuth';
 import { NavLink, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
   const { pathname } = useLocation();
+  const { isAuthenticated, signout } = useAuth();
 
   if (pathname === '/signin') {
     return <></>;
@@ -26,7 +28,11 @@ const Navbar = () => {
         alt="user icon"
         className="w-12 h-12 rounded-full"
       /> */}
-      <NavLink to="/">Logout</NavLink>
+      {isAuthenticated ? (
+        <button onClick={signout}>Logout</button>
+      ) : (
+        <NavLink to="/signin">Sign in</NavLink>
+      )}
     </nav>
   );
 };

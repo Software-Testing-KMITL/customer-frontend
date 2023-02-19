@@ -64,16 +64,20 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
-  useEffect(() => {
-    console.log(state);
-  }, [state]);
+  const signout = async () => {
+    localStorage.removeItem('accessToken');
+    axios.defaults.headers.common.Authorization = ``;
+
+    dispatch({ type: 'SIGNOUT' });
+    console.log('signout', { state });
+  };
 
   if (!state.isInitialized) {
     return <LoadingScreen />;
   }
 
   return (
-    <AuthContext.Provider value={{ ...state, signin }}>
+    <AuthContext.Provider value={{ ...state, signin, signout }}>
       {children}
     </AuthContext.Provider>
   );

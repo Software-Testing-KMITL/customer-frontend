@@ -12,6 +12,9 @@ type ActionType =
   | {
       type: 'SIGNIN';
       payload: { user: UserType | null };
+    }
+  | {
+      type: 'SIGNOUT';
     };
 
 export const authReducer = (state: IAuthState, action: ActionType) => {
@@ -29,6 +32,12 @@ export const authReducer = (state: IAuthState, action: ActionType) => {
         isInitialized: true,
         isAuthenticated: true,
         user: action.payload.user,
+      };
+    case 'SIGNOUT':
+      return {
+        ...state,
+        isAuthenticated: false,
+        user: null,
       };
     default:
       return state;
