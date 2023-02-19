@@ -4,7 +4,7 @@ const defaultValues = { username: '', password: '' };
 
 const SigninForm = () => {
   const { signin } = useAuth();
-  const { registerState, handleSubmit } = useHookForm({
+  const { registerState, handleSubmit, formState: { errors } } = useHookForm({
     defaultValues,
   });
 
@@ -30,6 +30,7 @@ const SigninForm = () => {
           },
         }}
       />
+      {errors.username && <span role="alert">{errors.username.message}</span>}
 
       <HookTextField
         {...registerState('password')}
@@ -40,7 +41,7 @@ const SigninForm = () => {
         }}
         rules={{
           required: {
-            message: 'Passworo is required',
+            message: 'Password is required',
             value: true,
           },
         }}

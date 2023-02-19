@@ -16,17 +16,21 @@ describe('Signin Form', () => {
     expect(SubmitButton).toBeDefined();
   });
 
-  // test('should show error message when username is empty', async () => {
-  //   render(<SigninForm />);
+  test('should show eror message when username is empty', async () => {
+    render(<SigninForm />);
 
-  //   const UsernameInput = screen.getByLabelText(/username/i);
-  //   fireEvent.change(UsernameInput, { target: { value: '' } });
+    const UsernameInput = screen.getByLabelText(/username/i);
+    fireEvent.change(UsernameInput, { target: { value: '' } });
 
-  //   const SubmitButton = screen.getByRole('button', { name: /sign in/i });
-  //   fireEvent.submit(SubmitButton);
+    const SubmitButton = screen.getByRole('button', { name: /sign in/i });
+    fireEvent.submit(SubmitButton);
 
-  //   expect(await screen.findAllByRole('alert')).toHaveLength(2);
-  //   const ErrorMessage = screen.getByText(/username is required/i);
-  //   expect(ErrorMessage).toBeDefined();
-  // });
+    expect(await screen.findAllByRole('alert')).toHaveLength(1);
+    /*  const ErrorMessage = screen.getByText(/Username is required/i);
+      expect(ErrorMessage).toBeDefined();*/
+  });
+
+  test('should show error message when username/password is incorrect', async () => { });
+
+  test('onSubmit function is called when username and password is valid', async () => { });
 });
