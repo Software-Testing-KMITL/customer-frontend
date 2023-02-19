@@ -39,9 +39,9 @@ const getProductById = async (
 ): Promise<void> => {
   try {
     const response = await axios.get("/products/" + body.productId);
-    const { data } = response.data;
+    const { product } = response.data;
     const { _id, name, category, price, amount, description, picture } =
-      data.product;
+      product;
 
     const extractedResponse: ProductDetailResponseType = {
       productId: _id,
