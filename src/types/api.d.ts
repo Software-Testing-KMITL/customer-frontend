@@ -35,3 +35,19 @@ export type ProductDetailResponseType = {
   description: string;
   picture: string;
 };
+
+// Cart
+// export type GetCartItemsRequestType = {};
+export type GetCartItemsResponseType = {};
+
+export type AddCartItemRequestType = {};
+export type AddCartItemResponseType = {};
+
+export type updateCartItemResponseType = {};
+export type updateCartItemRequestType = {};
+
+export type deleteCartItemResponseType = {};
+export type deleteCartItemRequestType = {};
+
+export type checkoutCartItemResponseType = {};
+export type checkoutCartItemRequestType = {};
