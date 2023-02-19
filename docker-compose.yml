@@ -9,8 +9,6 @@ services:
     ports:
       - "4002:80"
     restart: unless-stopped
-    env_file:
-      - .env
     environment:
       - TZ=Asia/Bangkok
       - STATUS=prod
