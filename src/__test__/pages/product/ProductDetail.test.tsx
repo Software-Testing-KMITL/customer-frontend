@@ -14,7 +14,7 @@ describe("Product Detail", () => {
     picture: "",
   };
   test("render correctly", () => {
-    const { getByText } = render(<ProductDetail data={mock} />);
+    render(<ProductDetail data={mock} />);
 
     let NameEl = screen.getByRole("heading", { name: mock.name });
     expect(NameEl).toBeDefined();
