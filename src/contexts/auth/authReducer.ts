@@ -6,13 +6,12 @@ type ActionType =
       type: 'INITIALIZE';
       payload: {
         isAuthenticated: boolean;
-        accessToken: string | null;
         user: UserType | null;
       };
     }
   | {
       type: 'SIGNIN';
-      payload: { accessToken: string; user: UserType | null };
+      payload: { user: UserType | null };
     };
 
 export const authReducer = (state: IAuthState, action: ActionType) => {
@@ -23,7 +22,6 @@ export const authReducer = (state: IAuthState, action: ActionType) => {
         isInitialized: true,
         isAuthenticated: action.payload.isAuthenticated,
         user: action.payload.user,
-        accessToken: action.payload.accessToken,
       };
     case 'SIGNIN':
       return {
@@ -31,7 +29,6 @@ export const authReducer = (state: IAuthState, action: ActionType) => {
         isInitialized: true,
         isAuthenticated: true,
         user: action.payload.user,
-        accessToken: action.payload.accessToken,
       };
     default:
       return state;
