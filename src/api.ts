@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Dispatch, SetStateAction } from "react";
 const baseURL = "https://api-customer.witchayut.com";
+// TODO: Change to axiosInstance
 
 type SignInResquestType = {
   username: string;
@@ -39,14 +40,13 @@ type ProductDetailResponseType = {
 function signin(
   body: SignInResquestType,
   // callBack: Dispatch<SetStateAction<string>>
-  callBack: (code: string, response: SignInResponseType | null) => void
+  callBack: (code: string, response: SignInResponseType | string) => void
 ) {
   axios
-    .post(baseURL + "/auth/login", {
-      username: body.username,
-      password: body.password,
-    })
+    .post(baseURL + "/auth/login", body)
     .then((response) => {
+      // axios header
+
       const { status, profile, accessToken } = response.data;
       const extractedResponse: SignInResponseType = {
         accessToken,
@@ -58,7 +58,8 @@ function signin(
     })
     .catch((e) => {
       console.log(e);
-      callBack(e, null);
+      const { status } = e.status.code;
+      callBack(status.code, e); // TODO: fix add callBack(code, errorText)
     });
 }
 
