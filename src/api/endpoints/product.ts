@@ -27,9 +27,9 @@ type ProductDetailResponseType = {
 };
 
 const getProductList = async (
-  body: ProductListRequestType
-  // callBack: (code: string, response: ProductListResponseType | null) => void
-): Promise<ProductListResponseType | null> => {
+  body: ProductListRequestType,
+  callBack: (response: ProductListResponseType) => void
+): Promise<void> => {
   try {
     const response = await axios.get("/products", {
       params: JSON.stringify(body),
@@ -42,19 +42,20 @@ const getProductList = async (
       totalProducts,
       products,
     };
-    // callBack(status.code, extractedResponse);
-    return extractedResponse;
+    callBack(extractedResponse);
   } catch (e) {
-    // TODO handle error
-    return null;
-    // callBack(e, null);
+    if (e instanceof AxiosError) {
+      const error = e.response?.data;
+      throw Error(error);
+    }
   }
 };
 
 // Get Product detail.
 const getProductById = async (
-  body: ProductDetailRequestType
-): Promise<ProductDetailResponseType | null> => {
+  body: ProductDetailRequestType,
+  callBack: (response: ProductDetailResponseType) => void
+): Promise<void> => {
   try {
     const response = await axios.get("/product" + body.productId);
     const { status, data } = response.data;
@@ -75,9 +76,12 @@ const getProductById = async (
       productDetail,
       productAmount,
     };
-    return extractedResponse;
+    callBack(extractedResponse);
   } catch (e) {
-    return null;
+    if (e instanceof AxiosError) {
+      const error = e.response?.data;
+      throw Error(error);
+    }
   }
 };
 
