@@ -2,10 +2,10 @@ import axios from "@/utils/axios";
 import { AxiosError } from "axios";
 
 type ProductListRequestType = {
-  page: number;
-  perPage: number;
-  search: string;
-  category: string;
+  page?: number;
+  perPage?: number;
+  search?: string;
+  category?: Array<string>;
 };
 type ProductListResponseType = {
   hasNext: boolean;
@@ -27,7 +27,7 @@ type ProductDetailResponseType = {
 };
 
 const getProductList = async (
-  body: ProductListRequestType,
+  body: ProductListRequestType | null,
   callBack: (response: ProductListResponseType) => void
 ): Promise<void> => {
   try {
@@ -45,7 +45,7 @@ const getProductList = async (
     callBack(extractedResponse);
   } catch (e) {
     if (e instanceof AxiosError) {
-      const error = e.response?.data;
+      const error = e.response?.data.message;
       throw Error(error);
     }
   }
@@ -79,7 +79,7 @@ const getProductById = async (
     callBack(extractedResponse);
   } catch (e) {
     if (e instanceof AxiosError) {
-      const error = e.response?.data;
+      const error = e.response?.data.message;
       throw Error(error);
     }
   }

@@ -6,7 +6,7 @@ const Products = () => {
     <div className="pt-16 pb-32">
       <div className="flex flex-wrap justify-between  gap-4 container mx-auto">
         {fakeProducts.map((product, index) => (
-          <ProductCard key={index} product={product} />
+          <ProductCard key={product._id} product={product} />
         ))}
       </div>
     </div>
