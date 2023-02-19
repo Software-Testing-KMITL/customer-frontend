@@ -1,6 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { SigninForm } from '@/sections/signin';
-import { userInfo } from 'os';
 
 describe('Signin Form', () => {
   test('should render correctly', () => {
@@ -31,13 +30,13 @@ describe('Signin Form', () => {
       expect(ErrorMessage).toBeDefined();*/
   });
 
-  test('should show error message when password is empty', async () => { })
+  test('should show error message when password is empty', async () => {});
 
-  test('should show error message when username/password is incorrect', async () => { });
+  test('should show error message when username/password is incorrect', async () => {});
 
   test('onSubmit function is called when username and password is valid', async () => {
     render(<SigninForm />);
 
-    const SubmitButton = screen.getByRole('button', { name: /sign in/i })
+    const SubmitButton = screen.getByRole('button', { name: /sign in/i });
   });
 });
