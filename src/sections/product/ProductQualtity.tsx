@@ -29,7 +29,9 @@ const ProductQualtity: React.FC<ProductQualtityType> = ({
       >
         -
       </button>
-      <span className="text-[20px]">{amount}</span>
+      <span role="counter" className="text-[20px]">
+        {amount}
+      </span>
       <button
         className="bg-gray-300 w-[30px] h-[30px] rounded-full"
         onClick={() => {
