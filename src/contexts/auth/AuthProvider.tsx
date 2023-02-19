@@ -1,9 +1,13 @@
 import { PropsWithChildren, useEffect, useReducer } from 'react';
+import { useSnackbar } from 'notistack';
 import { AuthContext } from './AuthContext';
 import { authReducer } from './authReducer';
 import { IAuthState } from './types';
+
+import { signin as APISignin } from '@/api';
 import { LoadingScreen } from '@/components/loading';
 import axios from '@/utils/axios';
+import { UserType } from '@/types';
 
 const initialState: IAuthState = {
   user: null,
@@ -13,6 +17,7 @@ const initialState: IAuthState = {
 
 const AuthProvider = ({ children }: PropsWithChildren) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
+  const { enqueueSnackbar } = useSnackbar();
 
   // Initialize the auth state
   useEffect(() => {
@@ -48,19 +53,18 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
   // Signin Logic
   const signin = async (_data: { username: string; password: string }) => {
     try {
-      const { data } = await axios.post('/auth/login', _data);
+      const signinDispatch = (user: UserType) => {
+        dispatch({
+          type: 'SIGNIN',
+          payload: {
+            user,
+          },
+        });
+      };
 
-      localStorage.setItem('accessToken', data.accessToken);
-      axios.defaults.headers.common.Authorization = `Bearer ${data.accessToken}`;
-
-      dispatch({
-        type: 'SIGNIN',
-        payload: {
-          user: data.profile,
-        },
-      });
+      APISignin(_data, signinDispatch);
     } catch (error) {
-      console.log(error);
+      enqueueSnackbar('Invalid username or password', { variant: 'error' });
     }
   };
 
