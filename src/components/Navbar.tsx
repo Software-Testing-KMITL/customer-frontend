@@ -26,8 +26,8 @@ const Navbar = () => {
 
       <div className="flex items-center gap-8">
         <NavLink to="/products">Products</NavLink>
-        <NavLink to="/">Messages</NavLink>
-        <NavLink to="/">Messages</NavLink>
+        {/* <NavLink to="/">Messages</NavLink> */}
+        {/* <NavLink to="/">Messages</NavLink> */}
       </div>
 
       {/* <img
