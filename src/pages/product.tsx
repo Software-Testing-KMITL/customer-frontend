@@ -24,7 +24,11 @@ const Product = () => {
   // console.log(params);
 
   useEffect(() => {
-    getProductById({ productId: params.id || "" }, handleData);
+    try {
+      getProductById({ productId: params.id || "" }, handleData);
+    } catch (e) {
+      console.log(e);
+    }
   }, []);
 
   return (
