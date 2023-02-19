@@ -1,19 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ProductQualtity } from "@/sections/product";
 import { ProductType } from "@/types";
 import { AuthGuard } from "@/components/auth";
+import { getProductById } from "@/api";
 
 const Product = () => {
   const data: ProductType = {
     id: "",
     name: "Product Name",
     price: 44.99,
-    amount: 0,
+    amount: 9,
     description:
       "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque omnis consequuntur vitae, qui voluptas quas excepturi officiis dignissimos praesentium? Perferendis consequatur dolorum facilis delectus reprehenderit! Facere dicta ea pariatur nemo.",
     category: "tops",
     picture: "",
   };
+
+  const [want, setWant] = useState(1);
+  // console.log("want on page =", want);
+
+  const handleResponse = () => {};
+
+  // useEffect(() => {
+  //   getProductById();
+  // }, []);
 
   return (
     <AuthGuard>
@@ -28,7 +38,7 @@ const Product = () => {
             <h3 className="text-2xl text-orange-400 font-semibold my-[20px]">
               $ {data.price}
             </h3>
-            <ProductQualtity />
+            <ProductQualtity remain={data.amount} setWant={setWant} />
             <div className="flex gap-[30px]">
               <button className="bg-orange-100 rounded-[7px] text-xl p-[12px] border-[2px] border-orange-400 text-orange-400">
                 Add to cart
