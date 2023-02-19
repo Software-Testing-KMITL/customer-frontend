@@ -7,7 +7,6 @@ import axios from '@/utils/axios';
 
 const initialState: IAuthState = {
   user: null,
-  accessToken: null,
   isInitialized: false,
   isAuthenticated: false,
 };
@@ -30,7 +29,6 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
           payload: {
             isAuthenticated: true,
             user: data.profile,
-            accessToken,
           },
         });
       } else {
@@ -39,7 +37,6 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
           payload: {
             isAuthenticated: false,
             user: null,
-            accessToken: null,
           },
         });
       }
@@ -52,7 +49,6 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
   const signin = async (_data: { username: string; password: string }) => {
     try {
       const { data } = await axios.post('/auth/login', _data);
-      console.log(data);
 
       localStorage.setItem('accessToken', data.accessToken);
       axios.defaults.headers.common.Authorization = `Bearer ${data.accessToken}`;
@@ -61,7 +57,6 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
         type: 'SIGNIN',
         payload: {
           user: data.profile,
-          accessToken: data.accessToken,
         },
       });
     } catch (error) {
@@ -69,16 +64,20 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
-  useEffect(() => {
-    console.log(state);
-  }, [state]);
+  const signout = async () => {
+    localStorage.removeItem('accessToken');
+    axios.defaults.headers.common.Authorization = ``;
+
+    dispatch({ type: 'SIGNOUT' });
+    console.log('signout', { state });
+  };
 
   if (!state.isInitialized) {
     return <LoadingScreen />;
   }
 
   return (
-    <AuthContext.Provider value={{ ...state, signin }}>
+    <AuthContext.Provider value={{ ...state, signin, signout }}>
       {children}
     </AuthContext.Provider>
   );
