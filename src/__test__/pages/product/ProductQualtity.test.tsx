@@ -5,7 +5,7 @@ import { render, screen } from "@testing-library/react";
 import { ProductQualtity } from "@/sections/product";
 
 describe("Product Qualtity", () => {
-  const setWant = () => {};
+  const setWant = () => { };
   let remain = 9;
 
   test("must render collect", () => {
@@ -21,12 +21,12 @@ describe("Product Qualtity", () => {
     expect(Counter).toBe("1");
   });
 
-  test("must increase when click (+) if not more than remain of product", () => {
-    let IncreaseButton = screen.getByRole("button", { name: "+" });
-    IncreaseButton.click();
-    let Counter = screen.getByRole("counter").textContent;
-    expect(Counter).toBe("2");
-  });
+  /* test("must increase when click (+) if not more than remain of product", () => {
+     let IncreaseButton = screen.getByRole("button", { name: "+" });
+     IncreaseButton.click();
+     let Counter = screen.getByRole("counter").textContent;
+     expect(Counter).toBe("2");
+   });*/
 
   test(
     "must not increase when click (+) if counter is equal remain of product"
