@@ -17,7 +17,10 @@ const Product = () => {
     picture: "",
   };
 
+  const [d, setD] = useState(temp);
+
   const handleData = (res: any) => {
+    setD(res);
     console.log(res);
   };
   const params = useParams();
@@ -33,7 +36,7 @@ const Product = () => {
 
   return (
     <AuthGuard>
-      <ProductDetail data={temp} />
+      <ProductDetail data={d} />
     </AuthGuard>
   );
 };

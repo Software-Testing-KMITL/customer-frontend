@@ -14,7 +14,12 @@ const ProductDetail: React.FC<Prop> = ({ data }) => {
     <div className="h-[100vh] grid place-items-center">
       <div className="container grid grid-cols-2 gap-[20px]">
         <section className="flex justify-center ">
-          <div className="bg-black rounded-[20px] w-[500px] h-[500px]"></div>
+          {/* <div className="bg-black rounded-[20px] w-[500px] h-[500px]"></div> */}
+          <img
+            src={data.picture}
+            className="bg-black rounded-[20px] w-[500px] h-[500px]"
+            alt=""
+          />
         </section>
         <section>
           <h2 className="text-5xl font-bold mb-[30px]">{data.name}</h2>
