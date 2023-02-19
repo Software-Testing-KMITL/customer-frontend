@@ -30,7 +30,7 @@ const signin = async (
     // console.log("api signin error : " + e);
     if (e instanceof AxiosError) {
       // console.log(e.response?.data);
-      const error = e.response?.data;
+      const error = e.response?.data.message;
       throw Error(error);
     }
   }
