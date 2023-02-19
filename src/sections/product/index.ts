@@ -1,0 +1,1 @@
+export {default as ProductQualtity} from './ProductQualtity'
