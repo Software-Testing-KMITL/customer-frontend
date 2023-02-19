@@ -6,7 +6,9 @@ type ProductBadgeProps = {
 
 const ProductBadge = ({ category }: ProductBadgeProps) => {
   return (
-    <span className="px-4 py-0.5 bg-orange-300 rounded-full">{category}</span>
+    <span className="px-4 py-0.5 bg-orange-500 text-white rounded-full">
+      {category}
+    </span>
   );
 };
 
