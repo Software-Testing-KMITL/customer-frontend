@@ -1,31 +1,21 @@
-FROM node:19-alpine as base
-
-FROM base as dependencies
-
-WORKDIR /app
-
-COPY package.json package-lock.json ./
-
-RUN npm ci
-
-FROM dependencies as builder
+FROM node:18-alpine AS builder
 
 WORKDIR /app
 
 COPY . .
 
-COPY --from=dependencies /app/node_modules ./node_modules
+RUN npm ci
 
 RUN npm run build
 
-# RUN npm run test
+FROM nginx:1.16.0-alpine
 
-FROM dependencies as runner
+COPY --from=builder /app/dist /usr/share/nginx/html
 
-# WORKDIR /app
+RUN rm /etc/nginx/conf.d/default.conf
 
-COPY --from=builder /app/node_modules ./node_modules
+COPY deploy/nginx/nginx.conf /etc/nginx/conf.d
 
-COPY --from=builder /app/dist ./dist
+EXPOSE 80
 
-CMD ["node", "dist/main.js"]
+CMD ["nginx", "-g", "daemon off;"]
