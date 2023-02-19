@@ -38,10 +38,17 @@ export type ProductDetailResponseType = {
 
 // Cart
 // export type GetCartItemsRequestType = {};
-export type GetCartItemsResponseType = {};
+export type GetCartItemsResponseType = {
+  cart: Array<ProductDetailResponseType>;
+};
 
-export type AddCartItemRequestType = {};
-export type AddCartItemResponseType = {};
+export type AddCartItemRequestType = {
+  productId: string;
+  amount: number;
+};
+export type AddCartItemResponseType = {
+  cart: Array<ProductDetailResponseType>;
+};
 
 export type updateCartItemResponseType = {};
 export type updateCartItemRequestType = {};
