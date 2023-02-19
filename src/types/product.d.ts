@@ -1,14 +1,14 @@
 export type ProductType = {
-    id: string;
-    name: string;
-    price: number;
-    amount: number;
-    description: string;
-    category: string;
-    picture: string;
-}
+  _id: string;
+  name: string;
+  price: number;
+  amount: number;
+  description: string;
+  category: string[];
+  picture: string;
+};
 
 export type CategoryType = {
-    id: string;
-    name: string;
-  }
+  id: string;
+  name: string;
+};
