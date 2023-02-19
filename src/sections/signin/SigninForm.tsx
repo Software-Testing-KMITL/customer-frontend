@@ -36,7 +36,7 @@ const SigninForm = () => {
         }}
       />
       {errors.username && (
-        <span role="alert" className="text-red-500">
+        <span role="alert" className="text-red-500 relative bottom-2">
           {errors.username.message}
         </span>
       )}
@@ -57,14 +57,14 @@ const SigninForm = () => {
         }}
       />
       {errors.password && (
-        <span role="alert" className="text-red-500">
+        <span role="alert" className="text-red-500 relative bottom-2">
           {errors.password.message}
         </span>
       )}
 
       <button
         type="submit"
-        className="bg-black py-2.5 font-semibold text-white mt-4 rounded-full active:bg-black/80"
+        className="bg-orange-600 py-2.5 font-semibold text-white mt-4 rounded-full active:bg-orange-600/80"
       >
         Sign in
       </button>
