@@ -30,6 +30,7 @@ describe('Signin Form', () => {
       expect(ErrorMessage).toBeDefined();*/
   });
 
+
   test('should show error message when password is empty', async () => {
     render(<SigninForm />);
 
@@ -66,9 +67,15 @@ describe('Signin Form', () => {
     expect(screen.getByRole("textbox", { name: /username/i })).toBeDefined();
   });
 
+  test('should show error message when password is empty', async () => {});
+
+  test('should show error message when username/password is incorrect', async () => {});
+
+
   test('onSubmit function is called when username and password is valid', async () => {
     const onSubmit = jest.fn();
     render(<SigninForm />);
+
 
     fireEvent.input(screen.getByRole("textbox", { name: /username/i }), {
       target: {
@@ -88,5 +95,7 @@ describe('Signin Form', () => {
     expect(onSubmit).toBeCalledWith("testusername", "password");
     expect(screen.getByRole("textbox", { name: /username/i })).toBeDefined();
     expect(screen.getByLabelText("password")).toBeDefined();
+
+    const SubmitButton = screen.getByRole('button', { name: /sign in/i });
   });
 });

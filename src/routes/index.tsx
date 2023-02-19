@@ -1,3 +1,4 @@
+import { LoadingScreen } from '@/components/loading';
 import { lazy, Suspense } from 'react';
 import { Navigate, Route, Routes as RRDRoutes } from 'react-router-dom';
 
@@ -7,7 +8,7 @@ const Signin = lazy(() => import('@/pages/signin'));
 
 const Routes = () => {
   return (
-    <Suspense fallback={<>Loadingl...</>}>
+    <Suspense fallback={<LoadingScreen />}>
       <RRDRoutes>
         <Route path="/" element={<Navigate to="/products" replace />} />
         <Route path="/signin" element={<Signin />} />
