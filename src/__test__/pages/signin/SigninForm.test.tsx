@@ -1,5 +1,10 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { SigninForm } from '@/sections/signin';
+import '@testing-library/jest-dom';
+
+const mockSignin = jest.fn((email, password) => {
+  return Promise.resolve({ email, password })
+});
 
 describe('Signin Form', () => {
   test('should render correctly', () => {
@@ -45,8 +50,6 @@ describe('Signin Form', () => {
   test('should show error message when username/password is incorrect', async () => {
     render(<SigninForm />);
 
-    const onSubmit = jest.fn()
-
     fireEvent.input(screen.getByRole("textbox", { name: /username/i }), {
       target: {
         value: "testusername"
@@ -62,12 +65,11 @@ describe('Signin Form', () => {
     fireEvent.submit(screen.getByRole('button', { name: /sign in/i }));
 
     expect(await screen.queryAllByRole("alert")).toHaveLength(2);
-    expect(onSubmit).not.toBeCalled();
+    expect(mockSignin).not.toBeCalled();
     expect(screen.getByRole("textbox", { name: /username/i })).toBeDefined();
   });
 
   test('onSubmit function is called when username and password is valid', async () => {
-    const onSubmit = jest.fn();
     render(<SigninForm />);
 
     fireEvent.input(screen.getByRole("textbox", { name: /username/i }), {
@@ -85,7 +87,7 @@ describe('Signin Form', () => {
     fireEvent.submit(screen.getByRole('button', { name: /sign in/i }));
 
     await waitFor(() => expect(screen.queryAllByRole("alert")).toHaveLength(0));
-    expect(onSubmit).toBeCalledWith("testusername", "password");
+    expect(mockSignin).toBeCalledWith("testusername", "password");
     expect(screen.getByRole("textbox", { name: /username/i })).toBeDefined();
     expect(screen.getByLabelText("password")).toBeDefined();
   });
