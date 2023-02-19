@@ -62,9 +62,13 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
         });
       };
 
-      APISignin(_data, signinDispatch);
+      await APISignin(_data, signinDispatch);
+      enqueueSnackbar('Login Success', { variant: 'success' });
     } catch (error) {
-      enqueueSnackbar('Invalid username or password', { variant: 'error' });
+      const message =
+        typeof error === 'string' ? error : 'Invalid username or password';
+
+      enqueueSnackbar(message, { variant: 'error' });
     }
   };
 
