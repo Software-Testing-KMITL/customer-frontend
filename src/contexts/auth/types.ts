@@ -4,5 +4,5 @@ export interface IAuthState {
   isAuthenticated: boolean;
   isInitialized: boolean;
   user: UserType | null;
-  token: string | null;
+  accessToken: string | null;
 }
