@@ -1,13 +1,11 @@
-import axios from "axios";
+import axios from "./utils/axios";
 import { Dispatch, SetStateAction } from "react";
-const baseURL = "https://api-customer.witchayut.com";
 
 type SignInResquestType = {
   username: string;
   password: string;
 };
 type SignInResponseType = {
-  accessToken: string;
   username: string;
   phoneNumber: string;
 };
@@ -25,6 +23,9 @@ type ProductListResponseType = {
   products: Array<object>;
 };
 
+type ProductDetailRequestType = {
+  productId: string;
+};
 type ProductDetailResponseType = {
   productId: string;
   productName: string;
@@ -34,107 +35,104 @@ type ProductDetailResponseType = {
   productAmount: number;
 };
 
+type GetCartItemsRequestType = {};
+type GetCartItemsResponseType = {};
+
 // * Authentication
 // Sign in.
-function signin(
+const signin = async (
   body: SignInResquestType,
-  // callBack: Dispatch<SetStateAction<string>>
-  callBack: (code: string, response: SignInResponseType | null) => void
-) {
-  axios
-    .post(baseURL + "/auth/login", {
-      username: body.username,
-      password: body.password,
-    })
-    .then((response) => {
-      const { status, profile, accessToken } = response.data;
-      const extractedResponse: SignInResponseType = {
-        accessToken,
-        username: profile.username,
-        phoneNumber: profile.phoneNumber,
-      };
-      console.log(status.code);
-      callBack(status.code, extractedResponse);
-    })
-    .catch((e) => {
-      console.log(e);
-      callBack(e, null);
-    });
-}
+  callBack: (response: SignInResponseType) => void
+): Promise<void> => {
+  try {
+    const response = await axios.post("/auth/login", body);
+    const { status, profile, accessToken } = response.data;
+    // Set auth access token.
+    localStorage.setItem("accessToken", accessToken);
+    axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
 
+    const extractedResponse: SignInResponseType = {
+      username: profile.username,
+      phoneNumber: profile.phoneNumber,
+    };
+    callBack(extractedResponse);
+  } catch (e) {
+    console.log("api signin error : " + e);
+    throw "api signin error : " + e;
+  }
+};
 // TODO: Refresh token
 
 // * Products
 // Get product list.
-function getProductList(
-  params: ProductListRequestType,
-  callBack: (code: string, response: ProductListResponseType | null) => void
-) {
-  axios
-    .get(baseURL + "/products", { params: JSON.stringify(params) })
-    .then((response) => {
-      const { hasNext, page, totalProducts, products, status } = response.data;
-
-      const extractedResponse: ProductListResponseType = {
-        hasNext,
-        page,
-        totalProducts,
-        products,
-      };
-      callBack(status.code, extractedResponse);
-    })
-    .catch((e) => {
-      // TODO handle error
-      callBack(e, null);
+const getProductList = async (
+  body: ProductListRequestType
+  // callBack: (code: string, response: ProductListResponseType | null) => void
+): Promise<ProductListResponseType | null> => {
+  try {
+    const response = await axios.get("/products", {
+      params: JSON.stringify(body),
     });
-}
+
+    const { hasNext, page, totalProducts, products, status } = response.data;
+    const extractedResponse: ProductListResponseType = {
+      hasNext,
+      page,
+      totalProducts,
+      products,
+    };
+    // callBack(status.code, extractedResponse);
+    return extractedResponse;
+  } catch (e) {
+    // TODO handle error
+    return null;
+    // callBack(e, null);
+  }
+};
 
 // Get Product detail.
-function getProductById(
-  token: string,
-  productId: string,
-  callBack: (code: string, response: ProductDetailResponseType | null) => void
-) {
-  axios
-    .get(baseURL + "/product" + productId, {
-      headers: {
-        token,
-      },
-    })
-    .then((response) => {
-      const { status, data } = response.data;
+const getProductById = async (
+  body: ProductDetailRequestType
+): Promise<ProductDetailResponseType | null> => {
+  try {
+    const response = await axios.get("/product" + body.productId);
+    const { status, data } = response.data;
+    const {
+      productId,
+      productName,
+      category,
+      price,
+      productDetail,
+      productAmount,
+    } = data.product;
 
-      const {
-        productId,
-        productName,
-        category,
-        price,
-        productDetail,
-        productAmount,
-      } = data.product;
-
-      const extractedResponse: ProductDetailResponseType = {
-        productId,
-        productName,
-        category,
-        price,
-        productDetail,
-        productAmount,
-      };
-      callBack(status.code, extractedResponse);
-    });
-}
+    const extractedResponse: ProductDetailResponseType = {
+      productId,
+      productName,
+      category,
+      price,
+      productDetail,
+      productAmount,
+    };
+    return extractedResponse;
+  } catch (e) {
+    return null;
+  }
+};
 
 // * Cart
-function checkoutCart() {}
-function getCartItems() {}
-function addCartItem() {}
-function updateCartItem() {}
-function deleteCartItem() {}
+// const getCartItems = async (): Promise<GetCartItemsResponseType | null> => {
+//   try {
+//   } catch (e) {}
+// };
+const addCartItem = async () => {};
+const updateCartItem = async () => {};
+const checkoutCart = async () => {};
+const deleteCartItem = async () => {};
 
 // * Profile
-function getUserProfile() {}
-function editUserProfile() {}
+const getUserProfile = async () => {};
+const editUserProfile = async () => {};
 
 export {
   signin,
