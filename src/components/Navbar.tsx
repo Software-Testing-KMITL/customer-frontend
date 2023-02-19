@@ -1,9 +1,16 @@
-import { useAuth } from '@/hooks/useAuth';
 import { NavLink, useLocation } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
+import { useAuth } from '@/hooks/useAuth';
 
 const Navbar = () => {
   const { pathname } = useLocation();
   const { isAuthenticated, signout } = useAuth();
+  const { enqueueSnackbar } = useSnackbar();
+
+  const handleSignout = () => {
+    signout();
+    enqueueSnackbar('Signout successful', { variant: 'success' });
+  };
 
   if (pathname === '/signin') {
     return <></>;
@@ -29,7 +36,7 @@ const Navbar = () => {
         className="w-12 h-12 rounded-full"
       /> */}
       {isAuthenticated ? (
-        <button onClick={signout}>Logout</button>
+        <button onClick={handleSignout}>Logout</button>
       ) : (
         <NavLink to="/signin">Sign in</NavLink>
       )}
