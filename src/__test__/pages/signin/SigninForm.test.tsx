@@ -42,9 +42,32 @@ describe('Signin Form', () => {
     expect(await screen.findAllByRole('alert')).toHaveLength(2);
   })
 
-  test('should show error message when username/password is incorrect', async () => { });
+  test('should show error message when username/password is incorrect', async () => {
+    render(<SigninForm />);
 
-  /*test('onSubmit function is called when username and password is valid', async () => {
+    const onSubmit = jest.fn()
+
+    fireEvent.input(screen.getByRole("textbox", { name: /username/i }), {
+      target: {
+        value: "testusername"
+      }
+    });
+
+    fireEvent.input(screen.getByLabelText("Password"), {
+      target: {
+        value: "password"
+      }
+    });
+
+    fireEvent.submit(screen.getByRole('button', { name: /sign in/i }));
+
+    expect(await screen.queryAllByRole("alert")).toHaveLength(2);
+    expect(onSubmit).not.toBeCalled();
+    expect(screen.getByRole("textbox", { name: /username/i })).toBeDefined();
+  });
+
+  test('onSubmit function is called when username and password is valid', async () => {
+    const onSubmit = jest.fn();
     render(<SigninForm />);
 
     fireEvent.input(screen.getByRole("textbox", { name: /username/i }), {
@@ -62,8 +85,8 @@ describe('Signin Form', () => {
     fireEvent.submit(screen.getByRole('button', { name: /sign in/i }));
 
     await waitFor(() => expect(screen.queryAllByRole("alert")).toHaveLength(0));
-    //  expect(SigninForm).toBeCalledWith("testusername", "password");
+    expect(onSubmit).toBeCalledWith("testusername", "password");
     expect(screen.getByRole("textbox", { name: /username/i })).toBeDefined();
     expect(screen.getByLabelText("password")).toBeDefined();
-  });*/
+  });
 });
