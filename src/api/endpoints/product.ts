@@ -13,7 +13,7 @@ const getProductList = async (
 ): Promise<void> => {
   try {
     const response = await axios.get("/products", {
-      params: JSON.stringify(body),
+      params: body ? JSON.stringify(body) : {},
     });
 
     const { hasNext, page, totalProducts, products, status } = response.data;
